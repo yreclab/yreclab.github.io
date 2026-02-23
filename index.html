@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>yreclab | stellar evolution browser, batteries-included</title>
+    <title>yreclab | stellar evolution browser</title>
     <style>
       body {
         font-family: arial;
@@ -18,7 +18,7 @@
 	  }
       #nml1 {
 		  position:absolute;
-		  top:84px;
+		  top:104px;
 		  bottom:0px;
 		  left:3%;
 		  width: 45.5%;
@@ -27,7 +27,7 @@
 	  }
       #nml2 {
 		  position:absolute;
-		  top:84px;
+		  top:104px;
 		  bottom:0px;
 		  right:3%;
 		  width: 45.5%;
@@ -45,7 +45,7 @@
 	  }
 	  #nml1label {
 		  position:absolute;
-		  top:64px;
+		  top:84px;
 		  /*left:3%;*/
 		  right:51.5%;
 		  font-size: 14px;
@@ -53,9 +53,49 @@
 	  }
 	  #nml2label {
 		  position:absolute;
-		  top:64px;
+		  top:84px;
 		  right:3%;
 		  font-size: 14px;
+		  font-family: sans-serif;
+	  }
+	  #folder {
+		  position:absolute;
+		  top:60px;
+		  left:3%;
+		  width: 17%;
+		  font-size: 12px;
+		  font-family: sans-serif;
+	  }
+	  #locknmls {
+		  position:absolute;
+		  top:60px;
+		  left:20%;
+		  width: 13.75%;
+		  font-size: 12px;
+		  font-family: sans-serif;
+	  }
+	  #locklbl {
+		  position:absolute;
+		  top:60px;
+		  left:20%;
+		  width: 13.75%;
+		  font-size: 12px;
+		  font-family: sans-serif;
+	  }
+	  #listnml1 {
+		  position:absolute;
+		  top:84px;
+		  left:3%;
+		  width: 27.5%;
+		  font-size: 12px;
+		  font-family: sans-serif;
+	  }
+	  #listnml2 {
+		  position:absolute;
+		  top:84px;
+		  left:51.5%;
+		  width: 27.5%;
+		  font-size: 12px;
 		  font-family: sans-serif;
 	  }
 	  #logo {
@@ -72,7 +112,7 @@
 	  }
 	  #step {
 		  position:relative;
-		  top:0px;
+		  top:10px;
 		  left:0px;
 		  width:64px;
 		  font-size: 24px;
@@ -80,7 +120,7 @@
 	  }
 	  #run {
 		  position:relative;
-		  top:0px;
+		  top:10px;
 		  left:15px;
 		  width:64px;
 		  font-size: 24px;
@@ -88,15 +128,22 @@
 	  }
 	  #pause {
 		  position:relative;
-		  top:0px;
+		  top:10px;
 		  left:30px;
+		  font-size: 24px;
+		  font-family: sans-serif;
+	  }
+	  #runall {
+		  position:relative;
+		  top:10px;
+		  left:45px;
 		  font-size: 24px;
 		  font-family: sans-serif;
 	  }
 	  #loader {
 		  position:relative;
-		  top:-27px;
-		  left:260px;
+		  top:-17px;
+		  left:380px;
 		  border: 6px solid #ddd;
 		  border-top: 6px solid #000;
 		  border-right: 6px solid #000;
@@ -104,6 +151,40 @@
 		  width: 10px;
 		  height: 10px;
 		  animation: spin 2s linear infinite;
+	  }
+	  #errored {
+		  position: relative;
+		  top: -17px;
+		  left: 380px;
+		  width: 16px;
+		  height: 16px;
+		  border-radius: 50%;
+		  background: #d32f2f;
+		  box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7);
+	  }
+	  #errored::before,
+	  #errored::after {
+		  content: "";
+		  position: absolute;
+		  top: 3px;
+		  left: 7px;
+		  width: 2px;
+		  height: 10px;
+		  background: white;
+		  border-radius: 1px;
+	  }
+	  #errored::before {
+		  transform: rotate(45deg);
+	  }
+	  #errored::after {
+		  transform: rotate(-45deg);
+	  }
+	  #error_message {
+		  position: relative;
+		  top: -32px;
+		  left: 404px;
+		  font-size: 12px;
+		  font-family: sans-serif;
 	  }
 	  @keyframes spin {
 		  0% { transform: rotate(0deg); }
@@ -177,12 +258,23 @@
     </style>
   </head>
   <body>
-	  <div id='logo'><a href='' style='font-size:inherit;color:inherit'>yrec<span style='color:#FA8000;font-size:inherit'>lab</span></a> <span id='version'>v.4.31</span> <span>|</span> <a href='about'>docs</a> <span>|</span> <a href='about'>github</a> <span>|</span> <a href='about'>about</a></div>
+	  <div id='logo'><a href='index.html' style='font-size:inherit;color:inherit'>yrec<span style='color:#FA8000;font-size:inherit'>lab</span></a> <span id='version'>v.5.1</span> <span>|</span> <a target="_blank" rel="noopener noreferrer" href='https://github.com/yreclab/yreclab'>github</a> <span>|</span> <a target="_blank" rel="noopener noreferrer" href='about'>about</a></div>
 	  <div id='controlbuttons'>
-	  <button onclick="set_nml(step_yrec_run);" id='step'>Step</button>
-	  <button onclick="set_nml(start_yrec_run);document.getElementById('run').setAttribute('disabled', 'disabled');document.getElementById('step').setAttribute('disabled', 'disabled')" id='run'>Run</button>
-	  <button onclick="stop_yrec_run();document.getElementById('run').removeAttribute('disabled');document.getElementById('step').removeAttribute('disabled')" id='pause'>Pause</button> <div id='loader' style='display:none'></div> </div>
+	  <button onclick="set_nml(step_yrec_run);document.getElementById('folder').setAttribute('disabled', 'disabled');document.getElementById('listnml1').setAttribute('disabled', 'disabled');document.getElementById('listnml2').setAttribute('disabled', 'disabled')" id='step'>Step</button>
+	  <button onclick="set_nml(start_yrec_run);document.getElementById('run').setAttribute('disabled', 'disabled');document.getElementById('runall').setAttribute('disabled', 'disabled');document.getElementById('step').setAttribute('disabled', 'disabled');document.getElementById('folder').setAttribute('disabled', 'disabled');document.getElementById('listnml1').setAttribute('disabled', 'disabled');document.getElementById('listnml2').setAttribute('disabled', 'disabled')" id='run'>Run</button>
+	  <button onclick="stop_yrec_run();document.getElementById('run').removeAttribute('disabled');document.getElementById('runall').setAttribute('disabled', 'disabled');document.getElementById('step').removeAttribute('disabled');document.getElementById('folder').setAttribute('disabled', 'disabled');document.getElementById('listnml1').setAttribute('disabled', 'disabled');document.getElementById('listnml2').setAttribute('disabled', 'disabled')" id='pause'>Pause</button>
+	  <button onclick="set_nml(start_yrec_run);document.getElementById('run').setAttribute('disabled', 'disabled');document.getElementById('runall').setAttribute('disabled', 'disabled');document.getElementById('step').setAttribute('disabled', 'disabled');document.getElementById('pause').setAttribute('disabled', 'disabled');document.getElementById('folder').setAttribute('disabled', 'disabled');document.getElementById('listnml1').setAttribute('disabled', 'disabled');document.getElementById('listnml2').setAttribute('disabled', 'disabled')" id='runall'>Finish</button>
+	  <div id='loader' style='display:none'></div><div id='errored' style='display:none'></div> <div id='error_message' style='display:none'></div> </div>
+	  
+	  <select id="folder" onchange="new_folder_selected();">
+	  </select>
+	  <!--<input type="checkbox" id="locknmls" name="locknmls" value="locked">
+	  <label for="locknmls" id="locklbl"> Lock namelists</label>-->
+	  <select id="listnml1" onchange="new_nml1_selected();" disabled='disabled'>
+	  </select>
 	  <div id='nml1label'>NML1: control <input id='downloadnml1' value='Download' type='button' /></div>
+	  <select id="listnml2" onchange="new_nml2_selected();" disabled='disabled'>
+	  </select>
 	  <div id='nml2label'>NML2: physics <input id='downloadnml2' value='Download' type='button' /></div>
 	  <textarea id='nml1' spellcheck="false"></textarea>
 	  <textarea id='nml2' spellcheck="false"></textarea>
@@ -221,6 +313,7 @@
 <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"></script>
 <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"></script>
 <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-api-2.4.3.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 
       <script type="text/javascript">
@@ -236,16 +329,90 @@
       structcoord2 = "radius";
       //yrec_process = 0;
       yrec_paused = 0;
+      
+      nml1files = [];
+      nml2files = [];
   
 	  var date = new Date();
 	  time_fname = date.getTime();
 	  
+	  function set_nml1_lists(nml1files) {
+		  selectnml1 = document.getElementById("listnml1");
+		  selectnml1.innerHTML = "";
+		  if (true) {
+			  const option = document.createElement("option");
+			  option.value = "";
+			  option.textContent = "Control Namelists";
+			  option.selected = true;
+			  selectnml1.appendChild(option);
+		  }
+		  for (const item of nml1files) {
+			  const option = document.createElement("option");
+			  var itemlen = item.split("/").length
+			  option.value = item;
+			  option.textContent = item.split("/")[itemlen-1];
+			  selectnml1.appendChild(option);
+		  }
+	  }
+	  
+	  function set_nml2_lists(nml2files) {
+		  selectnml2 = document.getElementById("listnml2");
+		  selectnml2.innerHTML = "";
+		  if (true) {
+			  const option = document.createElement("option");
+			  option.value = "";
+			  option.textContent = "Physics Namelists";
+			  option.selected = true;
+			  selectnml2.appendChild(option);
+		  }
+		  for (const item of nml2files) {
+			  const option = document.createElement("option");
+			  var itemlen = item.split("/").length
+			  option.value = item;
+			  option.textContent = item.split("/")[itemlen-1];
+			  selectnml2.appendChild(option);
+		  }
+	  }
+	  
+	  function get_folder(value) {
+		  var valuelen = value.split("/").length
+		  return value.split("/").slice(0, valuelen-1).join("/")
+	  }
+	  
+	  function only_unique(value, index, array) {
+		  return array.indexOf(value) === index;
+	  }
+	  
+	  function new_folder_selected() {
+		  var selectfolder = document.getElementById("folder");
+		  selected_folder = selectfolder.value;
+		  var current_nml1s = []
+		  for (var idx_nml1 = 0; idx_nml1 < nml1files.length; idx_nml1++){
+			  if(nml1files[idx_nml1].indexOf(selected_folder) !== -1){
+				  current_nml1s.push(nml1files[idx_nml1])
+			  }
+		  }
+		  var current_nml2s = []
+		  for (var idx_nml2 = 0; idx_nml2 < nml2files.length; idx_nml2++){
+			  if(nml2files[idx_nml2].indexOf(selected_folder) !== -1){
+				  current_nml2s.push(nml2files[idx_nml2])
+			  }
+		  }
+		  set_nml1_lists(current_nml1s);
+		  set_nml2_lists(current_nml2s);
+		  
+		  document.getElementById('listnml1').disabled = false;
+		  document.getElementById('listnml2').disabled = false;
+	  }
+	  
       worker.addEventListener('message', function(e) {
-		  console.log("EVENT", e.data);
+		  //console.log("EVENT", e.data);
 		  document.getElementById("loader").style.display = 'none';
 		  if(e.data.split("|")[0] == "ready"){
 			  worker.postMessage("get_nml1|");
 			  worker.postMessage("get_nml2|");
+			  worker.postMessage("list_nml1|templates");
+			  worker.postMessage("list_nml2|templates");
 		  }
 		  if(e.data.split("|")[0] == "chain" && yrec_paused == 0){
 			  worker.postMessage("chain");
@@ -289,6 +456,57 @@
 				  document.getElementById("outputview").value = outdata["short"];
 			  }
 		  }
+		  if(e.data.split("|")[0] == "list_nml1"){
+			  nml1files = e.data.split("|")[1].split(',');
+			  selectnml1 = document.getElementById("listnml1");
+			  selectnml1.innerHTML = "";
+			  
+			  unique_folders = nml1files.map(get_folder).filter(only_unique);
+			  
+			  selectfolder = document.getElementById("folder");
+			  selectfolder.innerHTML = "";
+			  if (true) {
+				  const option = document.createElement("option");
+				  option.value = "";
+				  option.textContent = "Control Namelists";
+				  option.selected = true;
+				  selectnml1.appendChild(option);
+			  }
+			  if (true) {
+				  const option = document.createElement("option");
+				  option.value = "";
+				  option.textContent = "Namelist Folders";
+				  option.selected = true;
+				  selectfolder.appendChild(option);
+			  }
+			  for (const item of unique_folders) {
+				  const option = document.createElement("option");
+				  option.value = item;
+				  option.textContent = item.split("/").slice(1).join("/");
+				  selectfolder.appendChild(option);
+			  }
+		  }
+		  if(e.data.split("|")[0] == "list_nml2"){
+			  nml2files = e.data.split("|")[1].split(',');
+			  selectnml2 = document.getElementById("listnml2");
+			  selectnml2.innerHTML = "";
+			  if (true) {
+				  const option = document.createElement("option");
+				  option.value = "";
+				  option.textContent = "Physics Namelists";
+				  option.selected = true;
+				  selectnml2.appendChild(option);
+			  }
+		  }
+		  if(e.data.split("|")[0] == "error"){
+			  document.getElementById('run').setAttribute('disabled', 'disabled');
+			  document.getElementById('step').setAttribute('disabled', 'disabled');
+			  document.getElementById('pause').setAttribute('disabled', 'disabled');
+			  document.getElementById("loader").style.display = 'none';
+			  document.getElementById("errored").style.display = '';
+			  document.getElementById("error_message").style.display = '';
+			  document.getElementById("error_message").textContent = "Error: " + e.data.split("|")[1];
+		  }
 	  });
 	  
 	  /*function start_yrec_run(){
@@ -298,6 +516,42 @@
 	  function stop_yrec_run(){
 		  clearInterval(yrec_process);
 	  }*/
+	  
+	  function new_nml1_selected(){
+		  const select_nml1 = document.getElementById("listnml1");
+		  const value = select_nml1.value;
+		  if (value.length > 0){
+			  worker.postMessage("read_nml1|"+value);
+		  }
+		  
+		  var valuelen = value.split(".").length
+		  var value_as_nml2 = value.split(".").slice(0, valuelen-1).join(".") + ".nml2"
+		  if (nml2files.indexOf(value_as_nml2) !== -1){
+			  const select_nml2 = document.getElementById("listnml2");
+			  select_nml2.value = value_as_nml2;
+			  if (value_as_nml2.length > 0){
+				  worker.postMessage("read_nml2|"+value_as_nml2);
+			  }
+		  }
+	  }
+	  
+	  function new_nml2_selected(){
+		  const select_nml2 = document.getElementById("listnml2");
+		  const value = select_nml2.value;
+		  if (value.length > 0){
+			  worker.postMessage("read_nml2|"+value);
+		  }
+		  
+		  var valuelen = value.split(".").length
+		  var value_as_nml1 = value.split(".").slice(0, valuelen-1).join(".") + ".nml1"
+		  if (nml1files.indexOf(value_as_nml1) !== -1){
+			  const select_nml1 = document.getElementById("listnml1");
+			  select_nml1.value = value_as_nml1;
+			  if (value_as_nml1.length > 0){
+				  worker.postMessage("read_nml1|"+value_as_nml1);
+			  }
+		  }
+	  }
 	  
 	  function set_nml(callback){
 		  worker.postMessage("set_nml1|"+document.getElementById("nml1").value);
@@ -346,8 +600,7 @@
 			x_axis_label: 'log Effective Temperature (Kelvin)',
 			y_axis_label: 'log Luminosity (Solar Luminosities)',
 		});
-
-		// add a line with data from the source
+		
 		plot1.line({ field: "x" }, { field: "y" }, {
 			source: source1,
 			line_width: 1
@@ -382,11 +635,11 @@
 
 		// make a plot with some tools
 		const plot2 = Bokeh.Plotting.figure({
-			title: 'Temperature-Pressure Plot',
+			title: 'Temperature-Density Plot',
 			tools: "pan,wheel_zoom,box_zoom,reset,save",
 			height: 390,
 			width: 585,
-			x_axis_label: 'log Pressure (dyn cm-2)',
+			x_axis_label: 'log Density (g cm-3)',
 			y_axis_label: 'log Temperature (Kelvin)',
 		});
 
@@ -457,39 +710,122 @@
 		Bokeh.Plotting.show(plot1, '#viewer1');
 		Bokeh.Plotting.show(plot2, '#viewer2');
 		Bokeh.Plotting.show(plot3, '#viewer3');
+		
+		selected_isos = [["0.001", "iso_age0.0010_feh0.0000.csv"], ["0.003", "iso_age0.0030_feh0.0000.csv"], ["0.010", "iso_age0.0100_feh0.0000.csv"], ["0.030", "iso_age0.0300_feh0.0000.csv"], ["0.100", "iso_age0.1000_feh0.0000.csv"], ["0.300", "iso_age0.3000_feh0.0000.csv"], ["1.000", "iso_age1.0000_feh0.0000.csv"], ["3.000", "iso_age3.0000_feh0.0000.csv"], ["10.000", "iso_age10.0000_feh0.0000.csv"]]
+		async function plotCSVColumnsBokeh({
+			  csvUrl,
+			  xCol,
+			  yCol,
+			  targetId = "plot",
+			  delimiter = ","
+			}) {
+			  // Fetch CSV text
+			  const response = await fetch(csvUrl);
+			  if (!response.ok) {
+				throw new Error(`Failed to load CSV: ${response.status}`);
+			  }
+			  const text = await response.text();
+
+			  // --- Simple CSV parsing ---
+			  const rows = text.trim().split("\n").map(r => r.split(delimiter));
+			  const headers = rows[0];
+
+			  const xIndex = headers.indexOf(xCol);
+			  const yIndex = headers.indexOf(yCol);
+
+			  if (xIndex === -1 || yIndex === -1) {
+				throw new Error("Specified columns not found in CSV headers.");
+			  }
+
+			  const x = [];
+			  const y = [];
+
+			  for (let i = 1; i < rows.length; i++) {
+				const xv = Number(rows[i][xIndex]);
+				const yv = Number(rows[i][yIndex]);
+
+				if (!Number.isNaN(xv) && !Number.isNaN(yv)) {
+				  x.push(xv);
+				  y.push(yv);
+				}
+			  }
+			const thrd = new Bokeh.ColumnDataSource({
+				data: { x: x, y: y }
+			});
+
+			plot1.line({ field: "x" }, { field: "y" }, {
+				source: thrd,
+				line_width: 0.25,
+				color: 'black'
+			});
+		}
+		
+		for (var idx = 0; idx < selected_isos.length; idx++) {
+			plotCSVColumnsBokeh({
+			  csvUrl: "./yreclab_isos/"+selected_isos[idx][1],
+			  xCol: "log_Teff",
+			  yCol: "LogL_lsun"
+			});
+		}
+		
+		function formatMyrGyr(x, opts = {}) {
+		  const { sigFigs = 3, trimTrailingZeros = true } = opts;
+
+		  if (!Number.isFinite(x)) return String(x);
+
+		  const unit = Math.abs(x) >= 1000 ? "Gyr" : "Myr";
+		  const value = unit === "Gyr" ? x / 1000 : x;
+
+		  let s = value.toPrecision(sigFigs);
+
+		  if (trimTrailingZeros) {
+			if (!/[eE]/.test(s)) {
+			  s = s.replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "");
+			}
+		  }
+
+		  return `${s} ${unit}`;
+		}
 
 		function refreshplot1() {
 			// add data --- all fields must be the same length.
 			source1.data.x = [];
 			source1.data.y = [];
+			var stAge = parseFloat(1000*Number(outdata["last"].split("\n")[0].slice(87,101)));
+			var numModels = parseFloat(Number(outdata["last"].split("\n")[0].slice(4,13)));
 			for (var xiter=0;xiter<outdata["track"].split("\n").length-15;xiter++){
 				source1.data.x.push(Number(outdata["track"].split("\n")[14+xiter].slice(19+16*4,33+16*4)));
 				source1.data.y.push(Number(outdata["track"].split("\n")[14+xiter].slice(19+16*1-1,33+16*1)));
 				curr_source1.data.x = [Number(outdata["track"].split("\n")[14+xiter].slice(19+16*4,33+16*4)),];
 				curr_source1.data.y = [Number(outdata["track"].split("\n")[14+xiter].slice(19+16*1-1,33+16*1)),];
-				curr_source1.data.z = [parseFloat(1000*Number(outdata["track"].split("\n")[14+xiter].slice(19+16*0,33+16*0))).toFixed(2)+" Myr",];
+				//curr_source1.data.z = [parseFloat(1000*Number(outdata["track"].split("\n")[14+xiter].slice(19+16*0,33+16*0))).toFixed(2)+" Myr",];
+				curr_source1.data.z = [formatMyrGyr(stAge),];
 				/*curr_source2.data.z = [parseFloat(1000*Number(outdata["track"].split("\n")[14+xiter].slice(19+16*0,33+16*0))).toFixed(2)+" Myr",];*/
 			}
 
 			// update the data source with local changes
 			source1.change.emit()
 			curr_source1.change.emit()
+			plot1.title.text = "Hertzsprung-Russell Diagram: Model #"+(numModels)+", "+formatMyrGyr(stAge);
 		}
 
 		function refreshplot2() {
 			source2.data.x = [];
 			source2.data.y = [];
 			for (var xiter=0;xiter<outdata["last"].split("\n").length-10;xiter++){
-				source2.data.x.push(Number(outdata["last"].split("\n")[9+xiter].slice(7+17+18+24,7+17+18+24+18)));
+				source2.data.x.push(Number(outdata["last"].split("\n")[9+xiter].slice(7+17+18+24+19+18,7+17+18+24+18+18+18)));
 				source2.data.y.push(Number(outdata["last"].split("\n")[9+xiter].slice(7+17+18+24+19,7+17+18+24+18+18)));
 				//curr_source2.data.x = [Number(outdata["last"].split("\n")[9+xiter].slice(7+17+18+24,7+17+18+24+18)),];
 				//curr_source2.data.y = [Number(outdata["last"].split("\n")[9+xiter].slice(7+17+18+24+19,7+17+18+24+18+18)),];
 			}
+			
+			var stAge = parseFloat(1000*Number(outdata["last"].split("\n")[0].slice(87,101)));
+			var numModels = parseFloat(Number(outdata["last"].split("\n")[0].slice(4,13)));
 
 			// update the data source with local changes
 			source2.change.emit()
 			//curr_source2.change.emit()
-			plot2.title.text = "Temperature-Pressure Plot "+parseFloat(1000*Number(outdata["last"].split("\n")[0].slice(87,101))).toFixed(2)+" Myr"
+			plot2.title.text = "Temperature-Density Plot: Model #"+(numModels)+", "+formatMyrGyr(stAge);
 		}
 
 		function refreshplot3() {
